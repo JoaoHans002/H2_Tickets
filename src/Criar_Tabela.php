@@ -6,6 +6,7 @@ use Joaoh\H2Tickets\Conexao_db;
 
 $pdo = Conexao_db::conectar();
 
+// Tabela de usuários (clientes e vendedores)
 $sql = "
 CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,15 +16,14 @@ CREATE TABLE IF NOT EXISTS usuarios (
     tipo TEXT NOT NULL
 );
 ";
-
 try {
     $pdo->exec($sql);
-    echo "Tabela 'usuarios' criada com sucesso!";
+    echo "Tabela 'usuarios' criada com sucesso!\n";
 } catch (PDOException $e) {
-    echo "Erro ao criar tabela: " . $e->getMessage();
+    echo "Erro ao criar tabela de usuarios: " . $e->getMessage() . "\n";
 }
 
-
+// Tabela de produtos/eventos
 $sql = "
 CREATE TABLE IF NOT EXISTS produtos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,33 +36,14 @@ CREATE TABLE IF NOT EXISTS produtos (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
 ";
-
 try {
     $pdo->exec($sql);
     echo "Tabela 'produtos' criada com sucesso!\n";
 } catch (PDOException $e) {
-    echo "Erro ao criar tabela de produtos: " . $e->getMessage();
+    echo "Erro ao criar tabela de produtos: " . $e->getMessage() . "\n";
 }
 
-
-$sql = "
-CREATE TABLE IF NOT EXISTS clientes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    email TEXT NOT NULL,
-    id_usuario INTEGER NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
-);
-";
-
-try {
-    $pdo->exec($sql);
-    echo "Tabela 'clientes' criada com sucesso!\n";
-} catch (PDOException $e) {
-    echo "Erro ao criar tabela de clientes: " . $e->getMessage();
-}
-
-
+// Tabela de compras
 $sql = "
 CREATE TABLE IF NOT EXISTS compras (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -76,20 +57,9 @@ CREATE TABLE IF NOT EXISTS compras (
     FOREIGN KEY (id_produto) REFERENCES produtos(id)
 );
 ";
-
 try {
     $pdo->exec($sql);
     echo "Tabela 'compras' criada com sucesso!\n";
 } catch (PDOException $e) {
-    echo "Erro ao criar tabela de compras: " . $e->getMessage();
+    echo "Erro ao criar tabela de compras: " . $e->getMessage() . "\n";
 }
-
-$sql = "ALTER TABLE usuarios ADD COLUMN tipo TEXT NOT NULL DEFAULT 'comprador';";
-
-try {
-    $pdo->exec($sql);
-    echo "Coluna 'tipo' adicionada à tabela 'usuarios' com sucesso!";
-} catch (PDOException $e) {
-    echo "Erro ao adicionar coluna 'tipo' à tabela 'usuarios': " . $e->getMessage();
-}
-
