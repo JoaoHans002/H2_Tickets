@@ -17,7 +17,7 @@ $mensagem = '';
 
 $agora = time();
 $timeout = 120;
-$pdo->exec("UPDATE produtos SET reservado = 0, data_reserva = NULL, id_usuario = NULL WHERE reservado = 1 AND data_reserva IS NOT NULL AND ($agora - data_reserva) > $timeout");
+$pdo->exec("UPDATE produtos SET reservado = 0, data_reserva = NULL WHERE reservado = 1 AND data_reserva IS NOT NULL AND ($agora - data_reserva) > $timeout");
 
 if (isset($_POST['comprar'])) {
     $produto_id = (int)$_POST['produto_id'];
@@ -78,7 +78,6 @@ $eventos = $pdo->query("
             <th>Evento</th>
             <th>Descrição</th>
             <th>Ingressos Disponíveis</th>
-            <th>Publicado por</th>
             <th>Ação</th>
         </tr>
         <?php foreach ($eventos as $evento): 
@@ -88,7 +87,6 @@ $eventos = $pdo->query("
             <td><?= htmlspecialchars($evento['nome']) ?></td>
             <td><?= htmlspecialchars($evento['descricao']) ?></td>
             <td><?= $disponiveis > 0 ? $disponiveis : 0 ?></td>
-            <td><?= htmlspecialchars($evento['nome_vendedor']) ?></td>
             <td>
                 <?php if ($disponiveis > 0): ?>
                     <form method="GET" action="comprar.php" style="display:inline;">
