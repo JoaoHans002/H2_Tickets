@@ -1,0 +1,15 @@
+{
+    "name": "joaoh/h2_tickets",
+    "description": "Sistema de compra e venda de ingressos H2 Tickets",
+    "autoload": {
+        "psr-4": {
+            "Joaoh\\H2Tickets\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "João Vitor Hans"
+        }
+    ],
+    "require": {}
+}
