@@ -26,8 +26,8 @@ if (isset($_POST['comprar'])) {
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($produto && ($produto['quantidade'] - $produto['reservado']) > 0) {
-        $stmt = $pdo->prepare("UPDATE produtos SET reservado = reservado + 1, data_reserva = ?, id_usuario = ? WHERE id = ?");
-        $stmt->execute([time(), $_SESSION['usuario_id'], $produto_id]);
+        $stmt = $pdo->prepare("UPDATE produtos SET reservado = reservado + 1, data_reserva = ? WHERE id = ?");
+        $stmt->execute([time(), $produto_id]);
 
         $stmt = $pdo->prepare("INSERT INTO compras (id_usuario, id_cliente, id_produto, status, data_hora) VALUES (?, ?, ?, 'reservada', datetime('now'))");
         $stmt->execute([$produto['id_usuario'], $_SESSION['usuario_id'], $produto_id]);
